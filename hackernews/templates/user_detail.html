@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>{{ object.username }}'s Profile</h2>
+    <div class="container">
+		<br />
+		<div class="panel panel-primary">
+        <div class="panel-heading">
+
+        </div>
+        <div class="panel-body">
+        <div class="table-responsive">
+
+                    {% if object.userprofile.bio %}
+                    <div>
+                <b>Bio:</b>
+                {{ object.userprofile.bio }}
+                    </div>
+                    {% endif %}
+                {% if object.username == user.username %}
+                <p><a href='{% url "edit_profile" %}'>Edit my profile</a></p>
+                {% endif %}
+     </div>
+    </div>
+    </div>
+    </div>
+
+
+{% endblock %}
