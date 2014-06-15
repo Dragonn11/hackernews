@@ -55,13 +55,17 @@
                     <input type="hidden" name="url" value="" />
                     <input type="hidden" name="next"
                        value="{% url 'link_detail' pk=object.id %}" />
-                    <input type="submit" value="Add comment" id="id_submit" />
+                    <input type="submit" class="btn btn-success" value="Add comment" id="id_submit" />
                   </form>
                 {% else %}
   <p>Please <a href="{% url 'login' %}">log in
   </a> to leave a comment.</p>
 {% endif %}
   </div>
+</div>
+        </div>
+        </div>
+        </div>
 
 
   {% render_comment_list for object %}

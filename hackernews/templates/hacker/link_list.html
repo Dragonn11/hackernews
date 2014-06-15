@@ -2,57 +2,95 @@
 {% load comments %}
 
 {% block content %}
-
-     <div class="container">
-		<br />
-		<div class="panel panel-primary">
-        <div class="panel-heading">
-
-        </div>
-        <div class="panel-body">
-                {% if is_paginated %}
-                <ol start="{{ page_obj.start_index }}">
-                {% else %}
-                <ol>
-                {% endif %}
-
-            {% for link in object_list %}
-            <form method="post" action="{% url 'vote' %}" class="vote_form">
-              <li> [{{ link.votes }}]
-                {% csrf_token %}
-                <input type="hidden" id="id_link" name="link" class="hidden_id" value="{{ link.pk }}" />
-                <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />
-                {% if not user.is_authenticated %}
-                <button disabled title="Please login to like">+</button>
-                {% elif link.pk not in voted %}
-                <button>+</button>
-                {% else %}
-                <button>-</button>
-                {% endif %}
-                <a href="{% url 'link_detail' pk=link.pk %}">
-                  <b>{{ link.title }}</b>
-                  {% get_comment_count for link as comment_count %}
-                  {{ comment_count }} comment{{ comment_count|pluralize }}
-                </a>
-              </li>
-            </form>
-            {% endfor %}
-                </ol>
-
-</div>
-    </div>
-    </div>
-    </div>
-
-
 {% if is_paginated %}
-<div class="pagination">
-    {% if page_obj.has_next %}
-    <a href="?page={{ page_obj.next_page_number }}">More &raquo;</a>
-    {% endif %}
-</div>
+<ol start="{{ page_obj.start_index }}">
+{% else %}
+<ol>
 {% endif %}
-<blockquote style="background-color: #ddd; padding: 4px; border-radius: 10px; margin: 10px 0; color: #666; font-size: smaller; text-shadow: rgba(255,255,255,0.8) 1px 1px 0;">
-{{ randomquip.comment|truncatechars:140 }}
-</blockquote>
-{% endblock %}
+     <body>
+        <div class="body">
+        <div class="wrap">
+        <div class="wrapper">
+
+             <!-- start header-->
+                    <div class="header">
+                        <div class="logo">
+                            <a href="index.html"><img src="/static/images/hn1.jpg" alt=""></a>
+                        </div>
+                       <br>
+                    <br>
+                    <br>
+              <br>
+            <br> <br> <br>
+
+                    </div>
+
+         <!-- start content -->
+	 <div class="main1">
+	 	 <div class="content">
+	 	 	<h2>Read Share and Comment on posts </h2>
+	 	 </div>
+
+
+        <div class="blog">
+		    <div class="blog_list">
+
+                {% for link in object_list %}
+                <form method="post" action="{% url 'vote' %}" class="vote_form">
+                        <h4><img src="/static/images/list.png" alt="">
+                        <a href="{{ link.url }}">
+                        <b>{{ link.title }}</b>
+                            </a></h4>
+                            <h5>{{ link.submit_on }}</h5>
+
+                <div class="blog_para">
+
+                        <p class="para1">{{ link.description }}</p>
+                        <div class="read_more">
+                             <li> {{ link.votes }}
+                            {% csrf_token %}
+                            <input type="hidden" id="id_link" name="link" class="hidden_id" value="{{ link.pk }}" />
+                            <input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />
+                            {% if not user.is_authenticated %}
+                            <button disabled title="Please login to like" class="btn">+</button>
+                            {% elif link.pk not in voted %}
+                            <button >+</button>
+                            {% else %}
+                            <button>-</button>
+                            {% endif %}
+                            <a class="btn" href="{{ link.url }}">Read More</a>
+
+
+
+
+                            <a class="btn" href="{% url 'link_detail' pk=link.pk %}">
+                               {% get_comment_count for link as comment_count %}
+                               {{ comment_count }} comment {{ comment_count|pluralize }}
+                            </a>
+                              </li>
+                 </form>
+                 {% endfor %}
+</ol>
+
+                 </div>
+                            <div class="clear"></div>
+
+
+                    </div>
+            </div>
+         </div>
+        </div>
+    </div>
+</div>
+        </body>
+        {% if is_paginated %}
+        <div class="pagination">
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">More &raquo;</a>
+            {% endif %}
+        </div>
+        {% endif %}
+        <blockquote style="background-color: #ddd; padding: 4px; border-radius: 10px; margin: 10px 0; color: #666; font-size: smaller; text-shadow: rgba(255,255,255,0.8) 1px 1px 0;">
+        {{ randomquip.comment|truncatechars:140 }}
+        </blockquote>
+    {% endblock %}
